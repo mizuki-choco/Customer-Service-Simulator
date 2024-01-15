@@ -60,6 +60,7 @@ class App:
 
         if self.game_over:
             pyxel.text(80, 10, "GAME OVER!!!", 7) #30秒経ったら文字表示
+            pyxel.text(70, 30, f"Your Score: {score}", 7) #スコアの表示を追加
         else:
             self.quizgame.draw() #QuizGameのdrawを呼び出す
 
