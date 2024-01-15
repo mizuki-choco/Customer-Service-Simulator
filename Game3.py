@@ -1,13 +1,14 @@
 import pyxel
-import random
 
 pyxel.init(200, 200)
+pyxel.sound(0).set(notes = 'A2C3', tones='TT', volumes='33', effects='NN', speed=10)
+pyxel.sound(1).set(notes='C3A2', tones='TT', volumes='33', effects='NN', speed=10)
 
-response1 = 35
-response2 = 115
-response3 = 15
-response4 = 75
-response5 = 135
+response1 = 13
+response2 = 13
+response3 = 13
+response4 = 13
+response5 = 13
 complain = 15
 
 score = 0
@@ -32,58 +33,78 @@ class Clock:
 
 class App:
     def __init__(self):
+        pyxel.mouse(True) #ここでマウスカーソルを作った
         self.clock = Clock(0, 0, 0)
+        self.quizgame = QuizGame() #クイズゲームのインスタンスが生成される
+        self.game_over = False #Trueになったらゲーム終了
         pyxel.run(self.update, self.draw)
-        #この辺がなんかおかしい
 
     def update(self):
         global response1, response2, response3, response4, response5, complain, score, number
         self.clock.update()
 
+        if self.clock.sec >= 10:
+            self.game_over = True
+        #30秒経過したらゲーム終了
+
     def draw(self):
         global response1, response2, response3, response4, response5, complain, score, number
-        pyxel.cls(7)
+        pyxel.cls(6)
         self.clock.draw() #タイマーの描画
-        pyxel.rect(response1, 170, 50, 20, 14) #返事1の描画
-        pyxel.rect(response2, 170, 50, 20, 14) #返事2の描画
-        pyxel.rect(response3, 140, 50, 20, 11) #返事3の描画
-        pyxel.rect(response4, 140, 50, 20, 11) #返事4の描画
-        pyxel.rect(response5, 140, 50, 20, 11) #返事5の描画
-        pyxel.rect(complain, 100, 170, 30, 13) #クレームの描画
-        pyxel.text(165, 0, "SCORE:" + str(number), 3)
+        pyxel.rect(response1, 75, 185, 15, 14) #返事1の描画
+        pyxel.rect(response2, 95, 185, 15, 11) #返事2の描画
+        pyxel.rect(response3, 115, 185, 15, 14) #返事3の描画
+        pyxel.rect(response4, 135, 185, 15, 11) #返事4の描画
+        pyxel.rect(response5, 155, 185, 15, 14) #返事5の描画
+        pyxel.rect(complain, 35, 178, 30, 13) #クレームの描画
+
+        if self.game_over:
+            pyxel.text(80, 10, "GAME OVER!!!", 7) #30秒経ったら文字表示
+        else:
+            self.quizgame.draw() #QuizGameのdrawを呼び出す
+
 
 class QuizGame:
     def __init__(self):
         self.questions = [
-            {"question": "What is the capital of France?", "options": ["Paris", "London", "Berlin", "Madrid"], "correct_option": 0},
-            {"question": "Which planet is known as the Red Planet?", "options": ["Earth", "Mars", "Jupiter", "Venus"], "correct_option": 1},
-            {"question": "What is the largest mammal on Earth?", "options": ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"], "correct_option": 1},
+            {"question": "The air conditioning is too strong.", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer A:", "question2": "I can't stand it anymore!", "correct_option": 0},
+            {"question": "The food is stale!", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer B:", "question2": "I will never come back to this restaurant!", "correct_option": 1},
+            {"question": "The table is too small.", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer C:", "question2": "Please give a bigger space for our seats.", "correct_option": 0},
+            {"question": "I still havent received my order!", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer D:", "question2": "I am hungry and can't stand it. Hurry up!", "correct_option": 2},
+            {"question": "I did not order this salad.", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer E:", "question2": "I ordered pasta. Isn't this the neighbor's?", "correct_option": 2},
+            {"question": "This rare steak is very good!", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer F:", "question2": "May I talk to the Chef, please?", "correct_option": 4},
+            {"question": "Put your hands up!", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer ???:", "question2": "Hand over all valuables!", "correct_option": 3},
+            {"question": "Is there a pizza that doesn't contain meat?", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer G:", "question2": "I'm a vegetarian.", "correct_option": 1},
+            {"question": "Let me speak with your manager.", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer H:", "question2": "The cuisine is excellent.", "correct_option": 4},
+            {"question": "I found a bug in my food!", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer I:", "question2": "It's disgusting!!", "correct_option": 1}
         ]
         self.current_question_index = 0
         self.score = 0
-
-        pyxel.init(200, 150, "Quiz Game", fps=60)
-        pyxel.mouse(True)
-
-        pyxel.run(self.update, self.draw)
 
     def update(self):
         pass
 
     def draw(self):
-        pyxel.cls(0)
+        
+        #客の詳細の描画
+        customer_name = self.questions[self.current_question_index]["customer_name"]
+        pyxel.text(20, 40, customer_name, 0)
 
         #質問の描画
         question = self.questions[self.current_question_index]["question"]
-        pyxel.text(1, 10, question, 2)
+        pyxel.text(20, 50, question, 0)
+
+        #質問の続きの描画
+        question = self.questions[self.current_question_index]["question2"]
+        pyxel.text(20, 57, question, 0)
 
         #選択肢の描画
         options = self.questions[self.current_question_index]["options"]
         for i, option in enumerate(options):
-            pyxel.text(20, 40 + i * 20, f"{chr(65 + i)}. {option}", 2)
+            pyxel.text(15, 80 + i * 20, f"{chr(65 + i)}. {option}", 0)
 
         #スコアの描画
-        pyxel.text(10, 130, f"Score: {self.score}", 2)
+        pyxel.text(165, 0, f"SCORE: {self.score}", 0)
 
         #マウスクリックで解答を選択する
         if pyxel.btnp(pyxel.KEY_SPACE):
@@ -92,10 +113,11 @@ class QuizGame:
 
             #マウスが選択肢の中にあったらクリックしたとみなす
             for i in range(len(options)):
-                if 20 <= mouse_x <= 180 and 40 + i * 20 <= mouse_y <= 60 + i * 20:
+                if 20 <= mouse_x <= 180 and 80 + i * 20 <= mouse_y <= 100 + i * 20:
                     #解答が正解だった場合
                     if i == self.questions[self.current_question_index]["correct_option"]:
                         self.score += 1
+                        pyxel.play(0,1)
 
                     #次の問題に移る
                     self.current_question_index += 1
@@ -106,10 +128,4 @@ class QuizGame:
 
                     break
 
-
-# アプリケーションの起動
 App()
-QuizGame()
-
-#csvファイルを作る
-#日本語フォントの入れ方
