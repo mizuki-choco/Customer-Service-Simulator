@@ -1,4 +1,5 @@
 import pyxel
+import random
 
 pyxel.init(200, 200)
 pyxel.sound(0).set(notes = 'A2C3', tones='TT', volumes='33', effects='NN', speed=10)
@@ -79,6 +80,7 @@ class QuizGame:
             {"question": "Let me speak with your manager.", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer H:", "question2": "The cuisine is excellent.", "correct_option": 4},
             {"question": "I found a bug in my food!", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer I:", "question2": "It's disgusting!!", "correct_option": 1}
         ]
+        random.shuffle(self.questions) #質問リストをランダムにシャッフル
         self.current_question_index = 0
         self.score = 0
 
