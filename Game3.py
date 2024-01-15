@@ -41,7 +41,7 @@ class App:
         global response1, response2, response3, response4, response5, complain, score, number
         self.clock.update()
 
-        if self.clock.sec >= 10:
+        if self.clock.sec >= 30:
             self.game_over = True
         #30秒経過したらゲーム終了
 
