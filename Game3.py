@@ -11,10 +11,7 @@ response3 = 13
 response4 = 13
 response5 = 13
 complain = 15
-
 score = 0
-number = 0
-
 
 class Clock:
     def __init__(self, x, y, c):
@@ -44,7 +41,7 @@ class App:
         global response1, response2, response3, response4, response5, complain, score, number
         self.clock.update()
 
-        if self.clock.sec >= 30:
+        if self.clock.sec >= 10:
             self.game_over = True
         #30秒経過したらゲーム終了
 
@@ -65,14 +62,13 @@ class App:
         else:
             self.quizgame.draw() #QuizGameのdrawを呼び出す
 
-
 class QuizGame:
     def __init__(self):
         self.questions = [
             {"question": "The air conditioning is too strong.", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer A:", "question2": "I can't stand it anymore!", "correct_option": 0},
             {"question": "The food is stale!", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer B:", "question2": "I will never come back to this restaurant!", "correct_option": 1},
             {"question": "The table is too small.", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer C:", "question2": "Please give a bigger space for our seats.", "correct_option": 0},
-            {"question": "I still haven't received my order!", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer D:", "question2": "I am hungry and can't stand it. Hurry up!", "correct_option": 2},
+            {"question": "I still havent received my order!", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer D:", "question2": "I am hungry and can't stand it. Hurry up!", "correct_option": 2},
             {"question": "I did not order this salad.", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer E:", "question2": "I ordered pasta. Isn't this the neighbor's?", "correct_option": 2},
             {"question": "This rare steak is very good!", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer F:", "question2": "May I talk to the Chef, please?", "correct_option": 4},
             {"question": "Put your hands up!", "options": ["I am sorry for the inconvenience you faced.", "I'll bring you another one right away.", "I'll see about your order right away.", "I'll call the police.", "Thank you so much!"], "customer_name": "Customer ???:", "question2": "Hand over all valuables!", "correct_option": 3},
